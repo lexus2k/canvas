@@ -301,8 +301,8 @@ public:
      */
     void setFixedFont( const uint8_t *progmemFont )
     {
-        g_ssd1306_font.loadFixedFont( progmemFont );
-        setFont( g_ssd1306_font );
+        g_canvas_font.loadFixedFont( progmemFont );
+        setFont( g_canvas_font );
     }
 
     /**
@@ -317,8 +317,8 @@ public:
      */
     void setFreeFont( const uint8_t *progmemFont, const uint8_t *secondaryFont = nullptr )
     {
-        g_ssd1306_font.loadFreeFont( progmemFont );
-        setFont( g_ssd1306_font );
+        g_canvas_font.loadFreeFont( progmemFont );
+        setFont( g_canvas_font );
     }
 
     /** Return pointer to canvas pixels data */
@@ -384,7 +384,6 @@ enum
 /**
  * NanoCanvas1 represents objects for drawing in memory buffer
  * NanoCanvas1 represents each pixel as single bit: 0/1
- * For details refer to SSD1306 datasheet
  */
 class NanoCanvas1: public NanoCanvasBase<1>
 {
@@ -423,7 +422,6 @@ public:
 /**
  * NanoCanvas8 represents objects for drawing in memory buffer
  * NanoCanvas8 represents each pixel as single byte with RGB bits: RRRGGGBB
- * For details refer to SSD1331 datasheet
  */
 class NanoCanvas8: public NanoCanvasBase<8>
 {
@@ -440,7 +438,6 @@ public:
 /**
  * NanoCanvas16 represents objects for drawing in memory buffer
  * NanoCanvas16 represents each pixel as 2-bytes with RGB bits: RRRRRGGG-GGGBBBBB
- * For details refer to SSD1351 datasheet
  */
 class NanoCanvas16: public NanoCanvasBase<16>
 {

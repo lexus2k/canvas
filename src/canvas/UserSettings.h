@@ -28,7 +28,7 @@
 #pragma once
 
 /**
- * @defgroup SSD1306_LIBRARY_CONFIG CONFIG: ssd1306 library configuration
+ * @defgroup CANVAS_LIBRARY_CONFIG CONFIG: canvas library configuration
  * @{
  */
 
@@ -38,7 +38,7 @@
 #endif
 
 /**
- * Defines, whenever ssd1306 library supports unicode.
+ * Defines, whenever the library supports unicode.
  * Support of unicode increases RAM and Flasg memory consumption
  */
 #define CONFIG_SSD1306_UNICODE_ENABLE

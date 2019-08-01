@@ -61,7 +61,7 @@
 /**
  * This is basic template class for all canvas classes,
  * based on Adafruit_GFX. This base class provides functionality
- * compatible with native NanoCanvas implementation of ssd1306
+ * compatible with native NanoCanvas implementation of the
  * library
  */
 template <uint8_t BPP>
@@ -125,7 +125,7 @@ private:
     {
         switch (getRotation()) {
         case 1:
-            ssd1306_swap_data(x, y, int16_t);
+            canvas_swap_data(x, y, int16_t);
             x = WIDTH - x - 1;
             break;
         case 2:
@@ -133,7 +133,7 @@ private:
             y = HEIGHT - y - 1;
             break;
         case 3:
-            ssd1306_swap_data(x, y, int16_t);
+            canvas_swap_data(x, y, int16_t);
             y = HEIGHT - y - 1;
             break;
         }
@@ -172,30 +172,11 @@ public:
 /**
  * AdafruitCanvas1 represents objects for drawing in memory buffer
  * AdafruitCanvas1 represents each pixel as single bit: 0/1
- * For details refer to SSD1306 datasheet
  */
 class AdafruitCanvas1 : public AdafruitCanvasBase<1>
 {
 public:
     using AdafruitCanvasBase::AdafruitCanvasBase;
-
-    /**
-     * Draws canvas on the LCD display
-     * @param x - horizontal position in pixels
-     * @param y - vertical position in pixels
-     */
-    void blt(lcdint_t x, lcdint_t y) override
-    {
-        ssd1306_drawBufferFast(x, y, WIDTH, HEIGHT, m_buffer);
-    }
-
-    /**
-     * Draws canvas on the LCD display using offset values.
-     */
-    void blt() override
-    {
-        ssd1306_drawBufferFast(offset.x, offset.y, WIDTH, HEIGHT, m_buffer);
-    }
 };
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -234,24 +215,6 @@ class AdafruitCanvas8 : public AdafruitCanvasBase<8>
 {
 public:
     using AdafruitCanvasBase::AdafruitCanvasBase;
-
-    /**
-     * Draws canvas on the LCD display
-     * @param x - horizontal position in pixels
-     * @param y - vertical position in pixels
-     */
-    void blt(lcdint_t x, lcdint_t y) override
-    {
-        ssd1306_drawBufferFast8(x, y, WIDTH, HEIGHT, m_buffer);
-    }
-
-    /**
-     * Draws canvas on the LCD display using offset values.
-     */
-    void blt() override
-    {
-        ssd1306_drawBufferFast8(offset.x, offset.y, WIDTH, HEIGHT, m_buffer);
-    }
 };
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -286,24 +249,6 @@ class AdafruitCanvas16 : public AdafruitCanvasBase<16>
 {
 public:
     using AdafruitCanvasBase::AdafruitCanvasBase;
-
-    /**
-     * Draws canvas on the LCD display
-     * @param x - horizontal position in pixels
-     * @param y - vertical position in pixels
-     */
-    void blt(lcdint_t x, lcdint_t y) override
-    {
-        ssd1306_drawBufferFast16(x, y, WIDTH, HEIGHT, m_buffer);
-    }
-
-    /**
-     * Draws canvas on the LCD display using offset values.
-     */
-    void blt() override
-    {
-        ssd1306_drawBufferFast16(offset.x, offset.y, WIDTH, HEIGHT, m_buffer);
-    }
 };
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

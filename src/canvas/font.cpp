@@ -35,7 +35,7 @@ enum
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
 uint8_t g_ssd1306_unicode2 = 1;
 #endif
-NanoFont g_ssd1306_font;
+NanoFont g_canvas_font;
 
 static const uint8_t * ssd1306_readUnicodeRecord(SUnicodeBlockRecord *r, const uint8_t *p)
 {

@@ -40,7 +40,7 @@
 
 /**
  * NanoFont class implements work with fonts provided by
- * ssd1306 library: loading fonts, providing their parameters
+ * the library: loading fonts, providing their parameters
  */
 class NanoFont
 {
@@ -70,7 +70,6 @@ public:
      * By default, the font supports only first 128 - 32 ascii chars.
      * Please refer to github wiki on how to generate new fonts.
      * @param progmemFont - font to setup located in Flash area
-     * @note This function supports new fonts of ssd1306 library 1.7.8 and above
      */
     void loadFreeFont(const uint8_t * progmemFont);
 
@@ -91,7 +90,6 @@ public:
     /**
      * Function allows to set and use squix font.
      * @param progmemFont - font to setup located in Flash area
-     * @note This function supports squix fonts for ssd1306 library 1.7.8 and above
      * @warning Squix fonts are not fully supported, use them at your own risk
      */
     void loadSquixFont(const uint8_t * progmemFont);
@@ -154,7 +152,7 @@ private:
     void (*m_getCharBitmap)(SFixedFontInfo &font,uint16_t unicode, SCharInfo *info) = nullptr;
 };
 
-extern NanoFont g_ssd1306_font;
+extern NanoFont g_canvas_font;
 
 /**
  * @}
