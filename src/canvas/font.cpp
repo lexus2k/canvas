@@ -23,6 +23,7 @@
 */
 
 #include "font.h"
+#include "canvas/internal/canvas_types.h"
 
 enum
 {

@@ -27,7 +27,7 @@
 
 #pragma once
 
-#include "canvas_types.h"
+#include "canvas/canvas_types.h"
 
 #ifdef __cplusplus
 extern "C" {

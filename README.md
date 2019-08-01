@@ -11,7 +11,6 @@
 
 [tocend]: # (toc end)
 
-
 ## Introduction
 
 Small canvas graphics library for small embedded systems
@@ -22,6 +21,19 @@ Small canvas graphics library for small embedded systems
    * monochrome color buffers
    * RGB 332 color buffers
    * RGB 565 color buffers
+ * Easy to use
+   * Used in [ssd1306](https://github.com/lexus2k/ssd1306) library
+
+Example:
+
+```.cpp
+// Create 8-bit RGB (3-3-2) canvas 64x64 pixels
+NanoCanvas<64,64,8> canvas;
+canvas.clear();
+canvas.drawLine(10,10,30,23);
+// To get width, height, and access the bitmap data use methods below
+// canvas.width(), canvas.height(), canvas.getData()
+```
 
 ## Setting up
 

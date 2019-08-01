@@ -78,7 +78,11 @@ CXXFLAGS += -fno-rtti
 
 .PHONY: clean canvas all help
 
-include Makefile.src
+include canvas/Makefile.src
+
+OBJS_C = $(addprefix src/, $(addsuffix .o, $(basename $(SRCS_C))))
+
+OBJS = $(addprefix $(BLD)/, $(addsuffix .o, $(basename $(SRCS))))
 
 ####################### Compiling library #########################
 

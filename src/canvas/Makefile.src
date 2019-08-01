@@ -21,16 +21,8 @@
 #    SOFTWARE.
 #
 
-SRCS_C = \
+SRCS += \
 	canvas/fonts/fonts.c \
-
-SRCS_CPP = \
 	canvas/canvas.cpp \
 	canvas/font.cpp \
-
-SRCS = $(SRCS_C) $(SRCS_CPP)
-
-OBJS_C = $(addprefix src/, $(addsuffix .o, $(basename $(SRCS_C))))
-
-OBJS = $(addprefix $(BLD)/, $(addsuffix .o, $(basename $(SRCS))))
 

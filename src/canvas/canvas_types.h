@@ -39,32 +39,11 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#if defined(ARDUINO)
-#elif defined(__AVR__)
-#else
-static inline uint8_t pgm_read_byte(const void *ptr) { return *((const uint8_t *)ptr); }
-#endif
-
 /** Flag means that more chars are required to decode utf-8 */
 #define SSD1306_MORE_CHARS_REQUIRED  0xffff
 
-#ifndef min
-/** Macros returning minimum of 2 numbers */
-#define min(a,b) ((a)<(b)?(a):(b))
-#endif
-
-#ifndef max
-/** Macros returning maximum of 2 numbers */
-#define max(a,b) ((a)>(b)?(a):(b))
-#endif
-
 #ifndef PROGMEM
 #define PROGMEM
-#endif
-
-#ifndef canvas_swap_data
-/** swaps content of a and b variables of type type */
-#define canvas_swap_data(a, b, type)  { type t = a; a = b; b = t; }
 #endif
 
 /** Macro to generate 8-bit color */
@@ -142,14 +121,6 @@ typedef struct
     uint8_t height;       ///< height in pixels
     uint8_t ascii_offset; ///< ascii offset
 } SFontHeaderRecord;
-
-/** Structure describes unicode block in font data */
-typedef struct
-{
-    uint16_t start_code;  ///< unicode start code
-    uint8_t count;        ///< count of unicode chars in block
-} SUnicodeBlockRecord;
-
 #pragma pack(pop)
 
 /** Structure is used for internal font presentation */
@@ -191,4 +162,3 @@ typedef struct
     uint8_t     scrollPosition;
 } SAppMenu;
 
-// ----------------------------------------------------------------------------
