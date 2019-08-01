@@ -25,7 +25,7 @@
 .PHONY: docs library help
 
 help:
-	@echo "============== SSD1306 library ================"
+	@echo "============== canvas library ================"
 	@echo "make docs          generates documentation"
 	@echo "make help          prints this help"
 	@echo "make check         run cppcheck tests"
