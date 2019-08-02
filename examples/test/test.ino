@@ -1,6 +1,10 @@
-#include "canvas/canvas.h"
+//#define TEST_ADAFRUIT
 
-NanoCanvas<64,64,8> canvas;
+#ifndef TEST_ADAFRUIT
+
+#include "canvas_gfx.h"
+
+NanoCanvas<48,24,8> canvas;
 
 void setup()
 {
@@ -11,3 +15,21 @@ void setup()
 void loop()
 {
 }
+
+#else
+
+#include "Adafruit_GFX.h"
+
+GFXcanvas8 canvas(48,24);
+
+void setup()
+{
+    canvas.fillScreen(0);
+    canvas.drawLine(10,10,30,23,0xFF);
+}
+
+void loop()
+{
+}
+
+#endif

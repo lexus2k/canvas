@@ -4,8 +4,7 @@
 
   * [Introduction](#introduction)
   * [Key Features](#key-features)
-  * [Supported displays](#supported-displays)
-  * [Supported platforms](#supported-platforms)
+  * [Why canvas library](#why-canvas-library)
   * [Setting up](#setting-up)
   * [License](#license)
 
@@ -21,6 +20,7 @@ Small canvas graphics library for small embedded systems
    * monochrome color buffers
    * RGB 332 color buffers
    * RGB 565 color buffers
+ * Small flash footprint
  * Easy to use
    * Used in [ssd1306](https://github.com/lexus2k/ssd1306) library
 
@@ -34,6 +34,13 @@ canvas.drawLine(10,10,30,23);
 // To get width, height, and access the bitmap data use methods below
 // canvas.width(), canvas.height(), canvas.getData()
 ```
+
+## Why canvas library
+
+The main idea is to have small flash footprint. The [test](examples/test/test.ino) demo example
+can be compiled either with Adafruit GFX support or canvas GFX support. Just only having Adafruit
+GFX 8-bit buffer defined in your application requires 6KiB of flash (for AVR), while the same
+code with canvas gfx library uses less than 1KiB of flash.
 
 ## Setting up
 
