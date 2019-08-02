@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 #    MIT License
 #
-#    Copyright (c) 2018, Alexey Dynda
+#    Copyright (c) 2018-2019, Alexey Dynda
 #
 #    Permission is hereby granted, free of charge, to any person obtaining a copy
 #    of this software and associated documentation files (the "Software"), to deal
@@ -48,6 +48,8 @@ def print_help_and_exit():
     print "      -fh       fixed height"
     print "      -fw       fixed width"
     print "      -g <S> <E> add chars group to the font"
+    print "                where <S> - first char hex or binary code, or char symbol"
+    print "                      <E> - chars count minus 1 (integer), or char symbol"
     print "      -f old    old format 1.7.6 and below"
     print "      -f new    new format 1.7.8 and above"
     print "      -d        Print demo text to console"
