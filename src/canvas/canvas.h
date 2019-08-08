@@ -420,6 +420,22 @@ public:
 /////////////////////////////////////////////////////////////////////////////////
 
 /**
+ * NanoCanvas4 represents objects for drawing in memory buffer
+ * NanoCanvas4 represents each pixel as 4-bits. Each byte contains 2 pixels: 22221111
+ */
+class NanoCanvas4: public NanoCanvasBase<4>
+{
+public:
+    using NanoCanvasBase::NanoCanvasBase;
+};
+
+/////////////////////////////////////////////////////////////////////////////////
+//
+//                             8-BIT GRAPHICS
+//
+/////////////////////////////////////////////////////////////////////////////////
+
+/**
  * NanoCanvas8 represents objects for drawing in memory buffer
  * NanoCanvas8 represents each pixel as single byte with RGB bits: RRRGGGBB
  */
