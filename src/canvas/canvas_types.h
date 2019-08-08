@@ -50,7 +50,7 @@
 #define RGB_COLOR8(r,g,b)    ( (r & 0xE0) | ((g >> 3)&0x1C) | (b>>6) )
 
 /** Macro to generate 4-bit monochrome color from gray component */
-#define MONO_COLOR4(gray)    ( ((gray >> 4) & 0x0F) | (gray & 0xF0) )
+#define GRAY_COLOR4(gray)    ( ((gray >> 4) & 0x0F) | (gray & 0xF0) )
 
 /** Macro to generate 4-bit monochrome color from RGB */
 #define RGB_COLOR4(r,g,b)    ( (r >> 2) + (g >> 1) + (b >> 2) )
