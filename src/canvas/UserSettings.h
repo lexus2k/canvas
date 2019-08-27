@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 /**
- * @file UserSettings.h canvas module configuration.
+ * @file canvas/UserSettings.h canvas module configuration.
  */
 
 #pragma once
