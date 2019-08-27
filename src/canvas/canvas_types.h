@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 /**
- * @file canvas_types.h Basic structures of canvas gfx library
+ * @file canvas/canvas_types.h Basic structures of canvas gfx library
  */
 
 #pragma once
@@ -42,8 +42,10 @@
 /** Flag means that more chars are required to decode utf-8 */
 #define SSD1306_MORE_CHARS_REQUIRED  0xffff
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #ifndef PROGMEM
 #define PROGMEM
+#endif
 #endif
 
 /** Macro to generate 8-bit color */

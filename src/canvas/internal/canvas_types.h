@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 /**
- * @file internal/canvas_types.h Internal structures of canvas gfx library
+ * @file canvas/internal/canvas_types.h Internal structures of canvas gfx library
  */
 
 #pragma once
@@ -32,7 +32,9 @@
 #if defined(ARDUINO)
 #elif defined(__AVR__)
 #else
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 static inline uint8_t pgm_read_byte(const void *ptr) { return *((const uint8_t *)ptr); }
+#endif
 #endif
 
 #ifndef min

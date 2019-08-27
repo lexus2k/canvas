@@ -51,10 +51,11 @@ code with canvas gfx library uses less than 1KiB of flash.
 *Using with plain avr-gcc:*
  * Download source from https://github.com/lexus2k/canvas
  * Build the library (variant 1)
-   * cd canvas/src && make -f Makefile.avr MCU=<your_mcu>
+   > cd canvas/src && make -f Makefile.avr MCU=your_mcu
+
    * Link library to your project (refer to [Makefile.avr](examples/Makefile.avr) in examples folder).
  * Build demo code (variant 2)
-   * cd canvas/tools && ./build_and_run.sh -p avr -m <your_mcu> test/test
+   > cd canvas/tools && ./build_and_run.sh -p avr -m `your_mcu` test/test
 
  *For esp32:*
   * Download source from https://github.com/lexus2k/canvas
@@ -68,8 +69,6 @@ If you found any problem or have any idea, please, report to Issues section.
 ## License
 
 The library is free. If this project helps you, you can give me a cup of coffee.
-[![Donate via Paypal](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/lexus2k)
-
 
 MIT License
 
