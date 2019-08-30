@@ -22,7 +22,7 @@ Small canvas graphics library for small embedded systems
    * RGB 565 color buffers
  * Small flash footprint
  * Easy to use
-   * Used in [ssd1306](https://github.com/lexus2k/ssd1306) library
+   * Used in [ssd1306](https://github.com/lexus2k/lcdgfx) library
 
 Example:
 
