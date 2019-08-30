@@ -64,8 +64,8 @@ code with canvas gfx library uses less than 1KiB of flash.
   * Put downloaded sources to components/canvas/ folder.
   * Compile your project as described in ESP-IDF build system documentation
 
-For more information about this library, please, visit https://github.com/lexus2k/canvas.
-Doxygen documentation can be found at [github.io site](http://lexus2k.github.io/canvas).
+For more information about this library, please, visit https://github.com/lexus2k/canvas or
+refer to [Documentation](http://lexus2k.github.io/canvas).
 If you found any problem or have any idea, please, report to Issues section.
 
 ## License
