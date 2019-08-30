@@ -327,6 +327,14 @@ public:
     /** Returns canvas width in pixels */
     lcduint_t width() { return m_w; }
 
+    /**
+     * Returns data size for single row in bytes
+     * Remember that in 1-bit mode each byte represent eight vertical pixels.
+     * So, for 1-bit mode pitch is equal to the buffer width, regardless of fact
+     * that each byte is eight pixels.
+     */
+    lcduint_t pitch() { return BPP == 1 ? m_w :  (m_w * BPP / 8); }
+
     /** Returns canvas height in pixels */
     lcduint_t height() { return m_h; }
 

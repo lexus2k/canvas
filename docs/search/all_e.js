@@ -3,6 +3,7 @@ var searchData=
   ['p1',['p1',['../struct___nano_rect.html#af3f18de2667af3087f7145c5a193f63b',1,'_NanoRect']]],
   ['p2',['p2',['../struct___nano_rect.html#a4d038b4eccb575c9128b38338ad74213',1,'_NanoRect']]],
   ['pages',['pages',['../struct_s_fixed_font_info.html#ae1f28bffdc33257500d04b8999edb9b2',1,'SFixedFontInfo']]],
+  ['pitch',['pitch',['../class_nano_canvas_ops.html#a376913bba9ac0877f9f8afd7798d39a2',1,'NanoCanvasOps']]],
   ['point_2eh',['point.h',['../point_8h.html',1,'']]],
   ['primary_5ftable',['primary_table',['../struct_s_fixed_font_info.html#a8b47480d4d3e59a40411045a1c82730c',1,'SFixedFontInfo']]],
   ['printchar',['printChar',['../class_nano_canvas_ops.html#a4031b35e730a08985d766d32f7c164fc',1,'NanoCanvasOps']]],

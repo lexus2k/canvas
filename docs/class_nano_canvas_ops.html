@@ -158,6 +158,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad7685533add6b7245b4b0d06d578607e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43c909c45bcdf889d187cc3a6c130511"><td class="memItemLeft" align="right" valign="top"><a class="el" href="canvas__types_8h.html#a3f8da2a8037c095075c26aaa7c7ebd82">lcduint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas_ops.html#a43c909c45bcdf889d187cc3a6c130511">width</a> ()</td></tr>
 <tr class="separator:a43c909c45bcdf889d187cc3a6c130511"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a376913bba9ac0877f9f8afd7798d39a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="canvas__types_8h.html#a3f8da2a8037c095075c26aaa7c7ebd82">lcduint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas_ops.html#a376913bba9ac0877f9f8afd7798d39a2">pitch</a> ()</td></tr>
+<tr class="separator:a376913bba9ac0877f9f8afd7798d39a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53d6e417b0ce8f39ff565c702bdb24c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="canvas__types_8h.html#a3f8da2a8037c095075c26aaa7c7ebd82">lcduint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas_ops.html#a53d6e417b0ce8f39ff565c702bdb24c2">height</a> ()</td></tr>
 <tr class="separator:a53d6e417b0ce8f39ff565c702bdb24c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -873,7 +875,7 @@ template&lt;uint8_t BPP&gt; </div>
 </div><div class="memdoc">
 <p>Returns canvas height in pixels </p>
 
-<p class="definition">Definition at line <a class="el" href="canvas_8h_source.html#l00331">331</a> of file <a class="el" href="canvas_8h_source.html">canvas.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="canvas_8h_source.html#l00339">339</a> of file <a class="el" href="canvas_8h_source.html">canvas.h</a>.</p>
 
 </div>
 </div>
@@ -904,6 +906,36 @@ template&lt;uint8_t BPP&gt; </div>
 <p>Returns right-bottom point of the canvas in offset terms. If offset is (0,0), then <a class="el" href="class_nano_canvas_ops.html#a1bc33d61da017643851937d680aefa36">offsetEnd()</a> will return (width-1,height-1). </p>
 
 <p class="definition">Definition at line <a class="el" href="canvas_8h_source.html#l00103">103</a> of file <a class="el" href="canvas_8h_source.html">canvas.h</a>.</p>
+
+</div>
+</div>
+<a id="a376913bba9ac0877f9f8afd7798d39a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a376913bba9ac0877f9f8afd7798d39a2">&#9670;&nbsp;</a></span>pitch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;uint8_t BPP&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="canvas__types_8h.html#a3f8da2a8037c095075c26aaa7c7ebd82">lcduint_t</a> <a class="el" href="class_nano_canvas_ops.html">NanoCanvasOps</a>&lt; BPP &gt;::pitch </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns data size for single row in bytes Remember that in 1-bit mode each byte represent eight vertical pixels. So, for 1-bit mode pitch is equal to the buffer width, regardless of fact that each byte is eight pixels. </p>
+
+<p class="definition">Definition at line <a class="el" href="canvas_8h_source.html#l00336">336</a> of file <a class="el" href="canvas_8h_source.html">canvas.h</a>.</p>
 
 </div>
 </div>

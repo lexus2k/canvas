@@ -33,6 +33,8 @@ canvas.clear();
 canvas.drawLine(10,10,30,23);
 // To get width, height, and access the bitmap data use methods below
 // canvas.width(), canvas.height(), canvas.getData()
+// If you need to know, how many bytes in single canvas row, use
+// canvas.pitch() method.
 ```
 
 ## Why canvas library

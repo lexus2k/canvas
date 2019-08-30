@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['pitch',['pitch',['../class_nano_canvas_ops.html#a376913bba9ac0877f9f8afd7798d39a2',1,'NanoCanvasOps']]],
   ['printchar',['printChar',['../class_nano_canvas_ops.html#a4031b35e730a08985d766d32f7c164fc',1,'NanoCanvasOps']]],
   ['printfixed',['printFixed',['../class_nano_canvas_ops.html#ab12c0610b21dfc2b5a4a6d0e9e595bda',1,'NanoCanvasOps']]],
   ['printfixedpgm',['printFixedPgm',['../class_nano_canvas_ops.html#adb1263d29d204157c1e87aa5172880b3',1,'NanoCanvasOps']]],
