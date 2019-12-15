@@ -55,7 +55,7 @@ public:
     /**
      * Creates NanoFont object and loads font of fixed type from flash memory
      */
-    NanoFont(const uint8_t * progmemFont) { loadFixedFont( progmemFont ); }
+    explicit NanoFont(const uint8_t * progmemFont) { loadFixedFont( progmemFont ); }
 
     /**
      * Function allows to set another fixed font for the library.

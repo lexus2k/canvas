@@ -38,10 +38,10 @@ AR = avr-ar
 MCU ?= atmega328p
 FREQUENCY ?= 16000000
 
-CCFLAGS += -mmcu=$(MCU) -DF_CPU=$(FREQUENCY)
+CPPFLAGS += -mmcu=$(MCU) -DF_CPU=$(FREQUENCY)
 
 ifeq ($(ADAFRUIT),y)
-INCLUDES += -I./lcd_hal/avr/arduino
+CPPFLAGS += -I./lcd_hal/avr/arduino
 endif
 
 include Makefile.common

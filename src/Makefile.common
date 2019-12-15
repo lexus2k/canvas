@@ -33,56 +33,32 @@ default: all
 
 DESTDIR ?=
 BLD ?= ../bld
-BACKSLASH?=/
-MKDIR?=mkdir -p
-convert=$(subst /,$(BACKSLASH),$1)
 
 .SUFFIXES: .c .cpp .ino
 
-$(BLD)/%.o: %.c
-	-$(MKDIR) $(call convert,$(dir $@))
-	$(CC) -std=gnu11 $(CCFLAGS) -c $< -o $@
-
-$(BLD)/%.o: %.ino
-	-$(MKDIR) $(call convert,$(dir $@))
-	$(CXX) -std=c++11 $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS-$(basename $(notdir $@))) -x c++ -c $< -o $@
-
-$(BLD)/%.o: %.cpp
-	-$(MKDIR) $(call convert,$(dir $@))
-	$(CXX) -std=c++11 $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS-$(basename $(notdir $@))) -c $< -o $@
+%.o: %.ino
+	$(CXX) -c $(CXXFLAGS) $(CPPFLAGS) -o $@ $<
 
 ################ OPTIONS ##########################
 
 ifeq ($(ADAFRUIT),y)
 ADAFRUIT_DIR ?= $(shell readlink -f ~)/Arduino/libraries/Adafruit_GFX_Library
-
-INCLUDES += -I$(ADAFRUIT_DIR) \
-
-#	-I$(shell readlink -f ../src)/lcd_hal/linux/arduino
-
-CCFLAGS-Adafruit_GFX= -DARDUINO=100
-
-SRCS += \
-	$(ADAFRUIT_DIR)/Adafruit_GFX.cpp
+CPPFLAGS += -I$(ADAFRUIT_DIR)
+CXXFLAGS-Adafruit_GFX= -DARDUINO=100
+OBJS += \
+	$(ADAFRUIT_DIR)/Adafruit_GFX.o
 endif
 
 # ************* Common defines ********************
 
-INCLUDES += \
-        -I. \
+CPPFLAGS += -I.
 
-CCFLAGS += -MD -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections \
-	-fno-exceptions
-
-CXXFLAGS += -fno-rtti
+CPPFLAGS += -MD -g -Os -Wall -Werror -ffunction-sections -fdata-sections
+CXXFLAGS += -fno-exceptions -fno-rtti
 
 .PHONY: clean canvas all help
 
 include canvas/Makefile.src
-
-OBJS_C = $(addprefix src/, $(addsuffix .o, $(basename $(SRCS_C))))
-
-OBJS = $(addprefix $(BLD)/, $(addsuffix .o, $(basename $(SRCS))))
 
 ####################### Compiling library #########################
 
@@ -95,6 +71,9 @@ all: canvas
 
 clean:
 	rm -rf $(BLD)
+	rm -rf $(OBJS)
+	rm -rf $(OBJS:%.o=%.d)
+	rm -rf $(OBJS:.o=.gcno) $(OBJS:.o=.gcda)
 
 help:
 	@echo "Makefile accepts the following options:"
