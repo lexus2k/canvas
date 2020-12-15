@@ -47,6 +47,7 @@ template <uint8_t BPP>
 class NanoCanvasOps
 {
 public:
+    /** Base type for canvas class specific operations */
     typedef NanoCanvasOps<BPP> T;
 
     /** number of bits per single pixel in buffer */
@@ -201,6 +202,14 @@ public:
     void fillRect(const NanoRect &rect);
 
     /**
+     * Draws circle
+     * @param x horizontal position of circle center in pixels
+     * @param y vertical position of circle center in pixels
+     * @param r circle radius in pixels
+     */
+    void drawCircle(lcdint_t x, lcdint_t y, lcdint_t r) __attribute__ ((noinline));
+
+    /**
      * @brief Draws monochrome bitmap in color buffer using color, specified via setColor() method
      * Draws monochrome bitmap in color buffer using color, specified via setColor() method
      * @param x - position X in pixels
@@ -350,6 +359,7 @@ public:
      */
     void setFreeFont( const uint8_t *progmemFont, const uint8_t *secondaryFont = nullptr )
     {
+        (void)(secondaryFont);
         g_canvas_font.loadFreeFont( progmemFont );
         setFont( g_canvas_font );
     }
