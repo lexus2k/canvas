@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018-2019, Alexey Dynda
+    Copyright (c) 2018-2020, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -107,6 +107,43 @@ template <uint8_t BPP>
 void NanoCanvasOps<BPP>::fillRect(const NanoRect &rect)
 {
     fillRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
+}
+
+template <uint8_t BPP>
+void NanoCanvasOps<BPP>::drawCircle(lcdint_t xc, lcdint_t yc, lcdint_t r)
+{
+    if ((xc + r < offset.x) || (yc + r < offset.y) ||
+        (xc - r >= (lcdint_t)m_w + offset.x) || (yc - r >= (lcdint_t)m_h - offset.y))
+    {
+        return;
+    }
+    lcdint_t d = 3 - 2 * r;
+    lcdint_t x = 0;
+    lcdint_t y = r;
+
+    putPixel(xc, yc + r);
+    putPixel(xc, yc - r);
+    putPixel(xc + r, yc);
+    putPixel(xc - r, yc);
+    while (y >= x)
+    {
+        x++;
+        if (d > 0)
+        {
+            y--;
+            d += - 4 * y + 4;
+        }
+        d += 4 * x + 6;
+
+        putPixel(xc+x, yc+y);
+        putPixel(xc-x, yc+y);
+        putPixel(xc+x, yc-y);
+        putPixel(xc-x, yc-y);
+        putPixel(xc+y, yc+x);
+        putPixel(xc-y, yc+x);
+        putPixel(xc+y, yc-x);
+        putPixel(xc-y, yc-x);
+    }
 }
 
 template <uint8_t BPP>
@@ -421,6 +458,7 @@ void NanoCanvasOps<1>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
     m_cursorX = 0;
     m_cursorY = 0;
     m_color = WHITE;
+    m_bgColor = 0;
     m_textMode = 0;
     m_buf = bytes;
     clear();
@@ -564,12 +602,12 @@ void NanoCanvasOps<4>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lc
     }
     if (y2 >= (lcdint_t)m_h)
     {
-         yb2 -= (y2 - (lcdint_t)m_h + 1);
+//         yb2 -= (y2 - (lcdint_t)m_h + 1);
          y2 = (lcdint_t)m_h - 1;
     }
     if (x2 >= (lcdint_t)m_w)
     {
-         xb2 -= (x2 - (lcdint_t)m_w + 1);
+//         xb2 -= (x2 - (lcdint_t)m_w + 1);
          x2 = (lcdint_t)m_w - 1;
     }
     for ( lcdint_t y = y1; y <= y2; y++ )
@@ -623,12 +661,12 @@ void NanoCanvasOps<4>::drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lc
     }
     if (y2 >= (lcdint_t)m_h)
     {
-         yb2 -= (y2 - (lcdint_t)m_h + 1);
+//         yb2 -= (y2 - (lcdint_t)m_h + 1);
          y2 = (lcdint_t)m_h - 1;
     }
     if (x2 >= (lcdint_t)m_w)
     {
-         xb2 -= (x2 - (lcdint_t)m_w + 1);
+//         xb2 -= (x2 - (lcdint_t)m_w + 1);
          x2 = (lcdint_t)m_w - 1;
     }
     for ( lcdint_t y = y1; y <= y2; y++ )
@@ -665,6 +703,7 @@ void NanoCanvasOps<4>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
     m_cursorX = 0;
     m_cursorY = 0;
     m_color = 0xFF; // white color by default
+    m_bgColor = 0x00;
     m_textMode = 0;
     m_buf = bytes;
     clear();
@@ -890,6 +929,7 @@ void NanoCanvasOps<8>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
     m_cursorX = 0;
     m_cursorY = 0;
     m_color = 0xFF; // white color by default
+    m_bgColor = 0x00;
     m_textMode = 0;
     m_buf = bytes;
     clear();

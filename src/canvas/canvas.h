@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018-2019, Alexey Dynda
+    Copyright (c) 2018-2020, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -47,6 +47,9 @@ template <uint8_t BPP>
 class NanoCanvasOps
 {
 public:
+    /** Base type for canvas class specific operations */
+    typedef NanoCanvasOps<BPP> T;
+
     /** number of bits per single pixel in buffer */
     static const uint8_t BITS_PER_PIXEL = BPP;
 
@@ -199,6 +202,14 @@ public:
     void fillRect(const NanoRect &rect);
 
     /**
+     * Draws circle
+     * @param x horizontal position of circle center in pixels
+     * @param y vertical position of circle center in pixels
+     * @param r circle radius in pixels
+     */
+    void drawCircle(lcdint_t x, lcdint_t y, lcdint_t r) __attribute__ ((noinline));
+
+    /**
      * @brief Draws monochrome bitmap in color buffer using color, specified via setColor() method
      * Draws monochrome bitmap in color buffer using color, specified via setColor() method
      * @param x - position X in pixels
@@ -281,6 +292,23 @@ public:
     void setColor(uint16_t color) { m_color = color; }
 
     /**
+     * Returns currently set color.
+     */
+    uint16_t getColor() { return m_color; }
+
+    /**
+     * Changes foreground and background colors
+     */
+    void invertColors() { uint16_t color = m_color; m_color = m_bgColor; m_bgColor = color; }
+
+    /**
+     * Sets background color
+     *
+     * @param color Background color
+     */
+    void setBackground(uint16_t color) { m_bgColor = color; }
+
+    /**
      * Sets new font to use with print functions.
      * If multiple canvases are used in single application,
      * this method allows to use different fonts for different
@@ -289,6 +317,20 @@ public:
      * @param font reference to font object (NanoFont)
      */
     void setFont( NanoFont &font ) { m_font = &font; };
+
+    /**
+     * Returns reference to NanoFont object, currently used by Display
+     */
+    NanoFont &getFont() { return *m_font; }
+
+    /**
+     * Sets font spacing for currently active font
+     * @param spacing spacing in pixels
+     */
+    void setFontSpacing(uint8_t spacing)
+    {
+        if (m_font) m_font->setSpacing(spacing);
+    }
 
     /**
      * Sets new font to use with print functions.
@@ -317,6 +359,7 @@ public:
      */
     void setFreeFont( const uint8_t *progmemFont, const uint8_t *secondaryFont = nullptr )
     {
+        (void)(secondaryFont);
         g_canvas_font.loadFreeFont( progmemFont );
         setFont( g_canvas_font );
     }
@@ -326,14 +369,6 @@ public:
 
     /** Returns canvas width in pixels */
     lcduint_t width() { return m_w; }
-
-    /**
-     * Returns data size for single row in bytes
-     * Remember that in 1-bit mode each byte represent eight vertical pixels.
-     * So, for 1-bit mode pitch is equal to the buffer width, regardless of fact
-     * that each byte is eight pixels.
-     */
-    lcduint_t pitch() { return BPP == 1 ? m_w :  (m_w * BPP / 8); }
 
     /** Returns canvas height in pixels */
     lcduint_t height() { return m_h; }
@@ -346,7 +381,8 @@ protected:
     uint8_t   m_textMode; ///< Flags for current NanoCanvas mode
     EFontStyle   m_fontStyle; ///< currently active font style
     uint8_t * m_buf;      ///< Canvas data
-    uint16_t  m_color;    ///< current color for monochrome operations
+    uint16_t  m_color;    ///< current color
+    uint16_t  m_bgColor;  ///< current background color
     NanoFont *m_font = nullptr; ///< current set font to use with NanoCanvas
 };
 
