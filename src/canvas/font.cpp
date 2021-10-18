@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2019-2020, Alexey Dynda
+    Copyright (c) 2019-2021, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
 */
 
 #include "font.h"
-#include "canvas/internal/canvas_types.h"
+#include "canvas/internal/canvas_types_int.h"
 
 enum
 {
@@ -49,7 +49,7 @@ static const uint8_t *ssd1306_readUnicodeRecord(SUnicodeBlockRecord *r, const ui
 /// OLD FORMAT: 1.7.6 and below
 /// OLD FORMAT is supported by old and latest versions of ssd1306 library
 
-static const uint8_t *ssd1306_getCharGlyph(SFixedFontInfo &font, char ch)
+static const uint8_t *ssd1306_getCharGlyph(const SFixedFontInfo &font, char ch)
 {
     return &font.primary_table[(ch - font.h.ascii_offset) * font.glyph_size +
                                (font.h.type == 0x01 ? sizeof(SUnicodeBlockRecord) : 0)];
@@ -85,7 +85,7 @@ static const uint8_t *ssd1306_searchCharGlyph(const SFixedFontInfo &font, const 
 }
 #endif
 
-static const uint8_t *ssd1306_getU16CharGlyph(SFixedFontInfo &font, uint16_t unicode)
+static const uint8_t *ssd1306_getU16CharGlyph(const SFixedFontInfo &font, uint16_t unicode)
 {
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
     if ( g_ssd1306_unicode2 )
@@ -116,7 +116,7 @@ static const uint8_t *ssd1306_getU16CharGlyph(SFixedFontInfo &font, uint16_t uni
     }
 }
 
-static void _ssd1306_oldFormatGetBitmap(SFixedFontInfo &font, uint16_t unicode, SCharInfo *info)
+static void _ssd1306_oldFormatGetBitmap(const SFixedFontInfo &font, uint16_t unicode, SCharInfo *info)
 {
     if ( info )
     {
@@ -147,7 +147,7 @@ void NanoFont::loadFixedFont(const uint8_t *progmemFont)
 /// NEW FORMAT: 1.7.8 and later
 /// NEW FORMAT is supported only by latest versions of ssd1306 library
 
-static void _ssd1306_newFormatGetBitmap(SFixedFontInfo &font, uint16_t unicode, SCharInfo *info)
+static void _ssd1306_newFormatGetBitmap(const SFixedFontInfo &font, uint16_t unicode, SCharInfo *info)
 {
     if ( info )
     {
@@ -249,7 +249,7 @@ void NanoFont::loadFixedFont_oldStyle(const uint8_t *progmemFont)
 /// SQUIX FORMAT: 1.7.8 and later
 /// SQUIX FORMAT is not fully supported. Use it at your own risk
 
-static void _ssd1306_squixFormatGetBitmap(SFixedFontInfo &font, uint16_t unicode, SCharInfo *info)
+static void _ssd1306_squixFormatGetBitmap(const SFixedFontInfo &font, uint16_t unicode, SCharInfo *info)
 {
     if ( info )
     {
