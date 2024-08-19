@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018-2021, Alexey Dynda
+    Copyright 2018-2022 (C) Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -106,7 +106,7 @@ template <uint8_t BPP> void NanoCanvasOps<BPP>::fillRect(const NanoRect &rect)
     fillRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
 }
 
-template <uint8_t BPP> void NanoCanvasOps<BPP>::drawCircle(lcdint_t xc, lcdint_t yc, lcdint_t r)
+template <uint8_t BPP> void NanoCanvasOps<BPP>::drawCircle(lcdint_t xc, lcdint_t yc, lcdint_t r, uint8_t options)
 {
     if ( (xc + r < offset.x) || (yc + r < offset.y) || (xc - r >= (lcdint_t)m_w + offset.x) ||
          (yc - r >= (lcdint_t)m_h - offset.y) )
@@ -117,10 +117,10 @@ template <uint8_t BPP> void NanoCanvasOps<BPP>::drawCircle(lcdint_t xc, lcdint_t
     lcdint_t x = 0;
     lcdint_t y = r;
 
-    putPixel(xc, yc + r);
-    putPixel(xc, yc - r);
-    putPixel(xc + r, yc);
-    putPixel(xc - r, yc);
+    if (options & (2+4)) putPixel(xc, yc + r);
+    if (options & (1+8)) putPixel(xc, yc - r);
+    if (options & (1+2)) putPixel(xc + r, yc);
+    if (options & (4+8)) putPixel(xc - r, yc);
     while ( y >= x )
     {
         x++;
@@ -131,14 +131,14 @@ template <uint8_t BPP> void NanoCanvasOps<BPP>::drawCircle(lcdint_t xc, lcdint_t
         }
         d += 4 * x + 6;
 
-        putPixel(xc + x, yc + y);
-        putPixel(xc - x, yc + y);
-        putPixel(xc + x, yc - y);
-        putPixel(xc - x, yc - y);
-        putPixel(xc + y, yc + x);
-        putPixel(xc - y, yc + x);
-        putPixel(xc + y, yc - x);
-        putPixel(xc - y, yc - x);
+        if (options & (2)) putPixel(xc + x, yc + y);
+        if (options & (4)) putPixel(xc - x, yc + y);
+        if (options & (1)) putPixel(xc + x, yc - y);
+        if (options & (8)) putPixel(xc - x, yc - y);
+        if (options & (2)) putPixel(xc + y, yc + x);
+        if (options & (4)) putPixel(xc - y, yc + x);
+        if (options & (1)) putPixel(xc + y, yc - x);
+        if (options & (8)) putPixel(xc - y, yc - x);
     }
 }
 
@@ -479,6 +479,28 @@ template <> void NanoCanvasOps<1>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
     clear();
 }
 
+template <> void NanoCanvasOps<1>::rotateCW(NanoCanvasOps<1> &out)
+{
+    for ( lcduint_t x = 0; x < m_w; x++ )
+    {
+        for ( lcduint_t y = 0; y < m_h; y++ )
+        {
+            uint16_t src_addr = x + (y / 8) * m_w;
+            uint8_t src_bit = y & 0x07;
+            uint16_t dst_addr = m_h - 1 - y + (x / 8) * m_h;
+            uint8_t dst_bit = x & 0x07;
+
+            uint8_t src_pixel = (m_buf[src_addr] >> src_bit) & 0x01;
+            out.m_buf[dst_addr] &= ~(1 << dst_bit);
+            out.m_buf[dst_addr] |= (src_pixel << dst_bit);
+        }
+    }
+    {
+        out.m_w = m_h;
+        out.m_h = m_w;
+    }
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 //
 //                           4-BIT GRAY GRAPHICS
@@ -727,6 +749,11 @@ template <> void NanoCanvasOps<4>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
     clear();
 }
 
+template <> void NanoCanvasOps<4>::rotateCW(NanoCanvasOps<4> &out)
+{
+    // Not implemented
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 //
 //                             8-BIT GRAPHICS
@@ -956,6 +983,11 @@ template <> void NanoCanvasOps<8>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
     clear();
 }
 
+template <> void NanoCanvasOps<8>::rotateCW(NanoCanvasOps<8> &out)
+{
+    // Not implemented
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 //
 //                             16-BIT GRAPHICS
@@ -1176,6 +1208,57 @@ void NanoCanvasOps<16>::drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, l
     }
 }
 
+template <>
+void NanoCanvasOps<16>::drawBitmap16(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+{
+    /* calculate char rectangle */
+    lcdint_t x1 = xpos - offset.x;
+    lcdint_t y1 = ypos - offset.y;
+    lcdint_t x2 = x1 + (lcdint_t)w - 1;
+    lcdint_t y2 = y1 + (lcdint_t)h - 1;
+    /* clip bitmap */
+    if ( (x2 < 0) || (x1 >= (lcdint_t)m_w) )
+        return;
+    if ( (y2 < 0) || (y1 >= (lcdint_t)m_h) )
+        return;
+
+    if ( x1 < 0 )
+    {
+        bitmap -= (x1 * 2);
+        x1 = 0;
+    }
+    if ( y1 < 0 )
+    {
+        bitmap += (lcduint_t)(-y1) * w * 2;
+        y1 = 0;
+    }
+    if ( y2 >= (lcdint_t)m_h )
+    {
+        y2 = (lcdint_t)m_h - 1;
+    }
+    if ( x2 >= (lcdint_t)m_w )
+    {
+        x2 = (lcdint_t)m_w - 1;
+    }
+    lcdint_t y = y1;
+    while ( y <= y2 )
+    {
+        for ( lcdint_t x = x1; x <= x2; x++ )
+        {
+            uint8_t data1 = pgm_read_byte(bitmap);
+            uint8_t data2 = pgm_read_byte(bitmap + 1);
+            if ( (data1 || data2) || (!(m_textMode & CANVAS_MODE_TRANSPARENT)) )
+            {
+                m_buf[YADDR16(y) + (x << 1)] = data1;
+                m_buf[YADDR16(y) + (x << 1) + 1] = data2;
+            }
+            bitmap += 2;
+        }
+        bitmap += (w - (x2 - x1 + 1)) * 2;
+        y++;
+    }
+}
+
 template <> void NanoCanvasOps<16>::clear()
 {
     memset(m_buf, 0, YADDR16(m_h));
@@ -1193,6 +1276,11 @@ template <> void NanoCanvasOps<16>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes
     m_textMode = 0;
     m_buf = bytes;
     clear();
+}
+
+template <> void NanoCanvasOps<16>::rotateCW(NanoCanvasOps<16> &out)
+{
+    // Not implemented
 }
 
 /////////////////////////////////////////////////////////////////////////////////

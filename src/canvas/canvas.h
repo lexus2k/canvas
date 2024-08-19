@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018-2020, Alexey Dynda
+    Copyright 2018-2020,2022 (C) Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -208,8 +208,9 @@ public:
      * @param x horizontal position of circle center in pixels
      * @param y vertical position of circle center in pixels
      * @param r circle radius in pixels
+     * @param options - lower bits correspond to 4 setions, where 1 means to draw, 0 - no
      */
-    void drawCircle(lcdint_t x, lcdint_t y, lcdint_t r) __attribute__((noinline));
+    void drawCircle(lcdint_t x, lcdint_t y, lcdint_t r, uint8_t options = 0x0F) __attribute__((noinline));
 
     /**
      * @brief Draws monochrome bitmap in color buffer using color, specified via setColor() method
@@ -237,6 +238,18 @@ public:
      * @param bitmap - 8-bit color bitmap data, located in flash
      */
     void drawBitmap8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap) __attribute__((noinline));
+
+    /**
+     * @brief Draws 16-bit color bitmap in color buffer.
+     * Draws 16-bit color bitmap in color buffer.
+     * @param x - position X in pixels
+     * @param y - position Y in pixels
+     * @param w - width in pixels
+     * @param h - height in pixels
+     * @param bitmap - 16-bit color bitmap data, located in flash
+     */
+    void drawBitmap16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+        __attribute__((noinline));
 
     /**
      * Clears canvas
@@ -408,6 +421,9 @@ public:
     {
         return m_h;
     }
+
+    /** Rotates the canvas clock-wise */
+    void rotateCW(T &out);
 
 protected:
     lcduint_t m_w;              ///< width of NanoCanvas area in pixels
